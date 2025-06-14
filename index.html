@@ -1,227 +1,95 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>استخراج مفاتيح MTK</title>
+    <title>手机日志分析工具</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
         body {
-            font-family: 'Noto Sans Arabic', Arial, sans-serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            direction: rtl;
+            height: 100vh;
+            margin: 0;
+            direction: ltr;
         }
         .container {
-            max-width: 800px;
-            width: 100%;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            animation: fadeIn 0.8s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 600px;
+            text-align: center;
         }
         h1 {
-            color: #1e3c72;
-            font-size: 28px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 700;
+            color: #333;
+        }
+        .input-box, .output-box {
+            margin: 20px 0;
         }
         textarea {
             width: 100%;
-            height: 180px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 15px;
-            font-size: 16px;
-            resize: vertical;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            background: #f9f9f9;
-            font-family: inherit;
+            height: 150px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            resize: none;
         }
-        textarea:focus {
-            border-color: #2a5298;
-            box-shadow: 0 0 10px rgba(42, 82, 152, 0.2);
-            outline: none;
-        }
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            font-size: 16px;
-            font-weight: 600;
-            color: #fff;
-            background: linear-gradient(90deg, #2a5298, #1e3c72);
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
             border: none;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin: 10px 5px;
-        }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(42, 82, 152, 0.4);
-        }
-        .btn i {
-            margin-left: 8px;
-        }
-        #error {
-            color: #d32f2f;
             font-size: 16px;
-            font-weight: 600;
-            margin: 15px 0;
-            text-align: center;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 16px;
-            background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        button:hover {
+            background-color: #45a049;
         }
-        th, td {
-            padding: 15px;
-            text-align: center;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        th {
-            background: linear-gradient(90deg, #2a5298, #1e3c72);
-            color: #fff;
-            font-weight: 600;
-        }
-        td {
-            background: #f9f9f9;
-            color: #333;
-        }
-        #keysTable, #downloadBtn {
-            display: none;
-        }
-        .icon {
-            margin-left: 8px;
-            font-size: 18px;
-        }
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            h1 {
-                font-size: 24px;
-            }
-            textarea, .btn {
-                width: 100%;
-            }
+        .output-box {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>استخراج مفاتيح MTK من سجل الهاتف</h1>
-        <textarea id="logInput" placeholder="قم بلصق محتوى سجل الهاتف هنا..." title="إدخال سجل الهاتف"></textarea>
-        <button class="btn" onclick="processLog()"><i class="fas fa-cogs icon"></i>معالجة السجل</button>
-        <div id="error"></div>
-        <table id="keysTable">
-            <thead>
-                <tr>
-                    <th>المفتاح</th>
-                    <th>القيمة</th>
-                </tr>
-            </thead>
-            <tbody id="keysBody"></tbody>
-        </table>
-        <button id="downloadBtn" class="btn" onclick="downloadKeys()"><i class="fas fa-download icon"></i>تحميل key.json</button>
+        <h1>手机日志分析工具</h1>
+        <div class="input-box">
+            <label for="logInput">请输入手机日志 (Log) 和读取信息 (Read Info):</label><br>
+            <textarea id="logInput" placeholder="在此粘贴日志或设备信息..."></textarea>
+        </div>
+        <button onclick="processLog()">分析日志</button>
+        <div class="output-box">
+            <label>Key.json 信息输出:</label><br>
+            <textarea id="keyOutput" readonly placeholder="Key.json 信息将显示在这里..."></textarea>
+        </div>
     </div>
 
     <script>
-        let keys = {};
-
         function processLog() {
-            const logInput = document.getElementById('logInput');
-            const errorDiv = document.getElementById('error');
-            const keysTable = document.getElementById('keysTable');
-            const keysBody = document.getElementById('keysBody');
-            const downloadBtn = document.getElementById('downloadBtn');
+            const logInput = document.getElementById('logInput').value;
+            const keyOutput = document.getElementById('keyOutput');
 
-            const logContent = logInput.value.trim();
-            if (!logContent) {
-                errorDiv.textContent = 'يرجى لصق محتوى السجل!';
-                keysTable.style.display = 'none';
-                downloadBtn.style.display = 'none';
+            if (!logInput) {
+                alert('请输入日志或设备信息！');
                 return;
             }
 
-            errorDiv.textContent = '';
-            keys = {};
-            keysBody.innerHTML = '';
+            // محاكاة معالجة السجل وعرض key.json افتراضي
+            const mockKeyJson = {
+                key: "sample_key_123",
+                device_id: "mock_device_456",
+                timestamp: new Date().toISOString(),
+                status: "success"
+            };
 
-            const lines = logContent.split('\n');
-
-            const keyPatterns = [
-                { key: 'ME_ID', pattern: /ME_ID: (.+)/ },
-                { key: 'HRID', pattern: /HRID: (.+)/ },
-                { key: 'SBC', pattern: /SBC: (.+)/ },
-                { key: 'DAA', pattern: /DAA: (.+)/ },
-                { key: 'SLA', pattern: /SLA: (.+)/ }
-            ];
-
-            lines.forEach(line => {
-                keyPatterns.forEach(pattern => {
-                    const match = line.match(pattern.pattern);
-                    if (match) {
-                        keys[pattern.key] = match[1].trim();
-                    }
-                });
-            });
-
-            if (Object.keys(keys).length === 0) {
-                errorDiv.textContent = 'لم يتم العثور على أي مفاتيح في السجل!';
-                keysTable.style.display = 'none';
-                downloadBtn.style.display = 'none';
-                return;
-            }
-
-            for (const [key, value] of Object.entries(keys)) {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${key}</td><td>${value}</td>`;
-                keysBody.appendChild(row);
-            }
-
-            keysTable.style.display = 'table';
-            downloadBtn.style.display = 'inline-block';
-        }
-
-        function downloadKeys() {
-            if (Object.keys(keys).length === 0) {
-                document.getElementById('error').textContent = 'لا توجد مفاتيح للتحميل!';
-                return;
-            }
-
-            const jsonContent = JSON.stringify(keys, null, 4);
-            const blob = new Blob([jsonContent], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'key.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            keyOutput.value = JSON.stringify(mockKeyJson, null, 2);
         }
     </script>
 </body>
