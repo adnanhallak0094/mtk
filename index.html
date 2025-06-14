@@ -3,91 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>▌│█║▌║▌║ATWAN꯭ࣩࣩࣩࣩࣩࣩࣩࠣࠣࠣࠣࠣࠣࠣࠣࠣࠣࠣࠣࠣࠣࠣࠣࠣࠣࠣࠣࠣࠣࣧࣧࣧࣧࣧࣧ VORTEX𖣐꯭ࠣࠣ</title>
+    <title>꧁AtwanVortex꧂</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Noto Sans SC', Arial, sans-serif;
-            background-color: #e9ecef;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
             margin: 0;
+            padding: 15px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        .container {
+            max-width: 100%;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
             padding: 20px;
-            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         h1 {
             color: #2c3e50;
+            font-size: 1.8rem;
             margin-bottom: 20px;
-        }
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         input[type="file"] {
-            margin: 15px;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 2px solid #ced4da;
+            border-radius: 8px;
+            background: #f8f9fa;
+            margin: 10px 0;
+            transition: border-color 0.3s;
+        }
+        input[type="file"]:focus {
+            border-color: #007bff;
+            outline: none;
         }
         button {
-            margin: 10px;
-            padding: 12px 20px;
-            font-size: 16px;
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
             cursor: pointer;
-            background-color: #007bff;
+            background: linear-gradient(to right, #007bff, #00c4ff);
             color: white;
             border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         button:hover {
-            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+        button i {
+            font-size: 1.2rem;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            font-size: 16px;
+            font-size: 0.9rem;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
         }
         th, td {
             border: 1px solid #dee2e6;
-            padding: 12px;
+            padding: 10px;
             text-align: center;
+            color: #333;
         }
         th {
-            background-color: #f8f9fa;
+            background: #f8f9fa;
             color: #495057;
+            font-weight: 700;
         }
         td {
-            background-color: #ffffff;
+            background: #ffffff;
         }
         #error {
             color: #dc3545;
             font-weight: bold;
-            margin-top: 10px;
+            margin: 10px 0;
+            text-align: center;
+            animation: shake 0.3s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25%, 75% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
         }
         #keysTable, #downloadBtn {
             display: none;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #007bff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         @media (max-width: 600px) {
             .container {
                 padding: 15px;
             }
+            h1 {
+                font-size: 1.5rem;
+            }
             button, input[type="file"] {
-                width: 100%;
-                box-sizing: border-box;
+                font-size: 0.9rem;
+            }
+            table {
+                font-size: 0.8rem;
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <h1>꧁AtwanVortex꧂</h1>
         <input type="file" id="logFileInput" accept=".txt" title="حدد ملف نص السجل">
-        <button onclick="processLog()">معالجة السجلات</button>
+        <button onclick="processLog()"><i class="fas fa-cogs"></i> معالجة السجلات</button>
+        <div class="loading" id="loading"></div>
         <div id="error"></div>
         <table id="keysTable">
             <thead>
@@ -98,7 +166,7 @@
             </thead>
             <tbody id="keysBody"></tbody>
         </table>
-        <button id="downloadBtn" onclick="downloadKeys()">download key.json</button>
+        <button id="downloadBtn" onclick="downloadKeys()"><i class="fas fa-download"></i> تحميل key.json</button>
     </div>
 
     <script>
@@ -110,31 +178,33 @@
             const keysTable = document.getElementById('keysTable');
             const keysBody = document.getElementById('keysBody');
             const downloadBtn = document.getElementById('downloadBtn');
+            const loading = document.getElementById('loading');
 
             if (!fileInput.files.length) {
-                errorDiv.textContent = 'الرجاء تحديد ملف نص السجل！';
+                errorDiv.textContent = 'الرجاء تحديد ملف نص السجل!';
                 keysTable.style.display = 'none';
                 downloadBtn.style.display = 'none';
                 return;
             }
 
+            loading.style.display = 'block';
+            errorDiv.textContent = '';
+
             const file = fileInput.files[0];
             const reader = new FileReader();
 
             reader.onload = function(event) {
-                errorDiv.textContent = '';
+                loading.style.display = 'none';
                 keys = {};
                 keysBody.innerHTML = '';
 
                 const logContent = event.target.result;
                 const lines = logContent.split('\n');
 
-                // Patterns to extract keys from log
                 const keyPatterns = [
                     { key: 'ME_ID', pattern: /ME_ID: (.+)/ },
                     { key: 'HRID', pattern: /HRID: (.+)/ },
-
-{ key: 'SBC', pattern: /SBC: (.+)/ },
+                    { key: 'SBC', pattern: /SBC: (.+)/ },
                     { key: 'DAA', pattern: /DAA: (.+)/ },
                     { key: 'SLA', pattern: /SLA: (.+)/ }
                 ];
@@ -149,25 +219,25 @@
                 });
 
                 if (Object.keys(keys).length === 0) {
-                    errorDiv.textContent = 'لم يتم العثور على مفاتيح في السجل！';
+                    errorDiv.textContent = 'لم يتم العثور على مفاتيح في السجل!';
                     keysTable.style.display = 'none';
                     downloadBtn.style.display = 'none';
                     return;
                 }
 
-                // Populate table with keys
                 for (const [key, value] of Object.entries(keys)) {
                     const row = document.createElement('tr');
-                    row.innerHTML = <td>${key}</td><td>${value}</td>;
+                    row.innerHTML = `<td>${key}</td><td>${value}</td>`;
                     keysBody.appendChild(row);
                 }
 
                 keysTable.style.display = 'table';
-                downloadBtn.style.display = 'inline-block';
+                downloadBtn.style.display = 'block';
             };
 
             reader.onerror = function() {
-                errorDiv.textContent = 'خطأ في قراءة ملف السجل！';
+                loading.style.display = 'none';
+                errorDiv.textContent = 'خطأ في قراءة ملف السجل!';
                 keysTable.style.display = 'none';
                 downloadBtn.style.display = 'none';
             };
@@ -177,7 +247,7 @@
 
         function downloadKeys() {
             if (Object.keys(keys).length === 0) {
-                document.getElementById('error').textContent = 'لا يوجد مفتاح متاح للتنزيل！';
+                document.getElementById('error').textContent = 'لا يوجد مفتاح متاح للتنزيل!';
                 return;
             }
 
