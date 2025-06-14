@@ -1,95 +1,50 @@
+
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>手机日志分析工具</title>
+    <title>日志提取工具 - 转换为 key.json</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            direction: ltr;
-        }
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 600px;
-            text-align: center;
-        }
-        h1 {
-            color: #333;
-        }
-        .input-box, .output-box {
-            margin: 20px 0;
-        }
-        textarea {
-            width: 100%;
-            height: 150px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            resize: none;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .output-box {
-            background-color: #f9f9f9;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
+        body { font-family: "Microsoft YaHei", sans-serif; background: #f9f9f9; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        textarea { width: 100%; height: 250px; padding: 12px; font-family: monospace; font-size: 14px; border: 1px solid #ccc; border-radius: 5px; }
+        button { margin-top: 20px; padding: 10px 20px; background: #0066cc; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 14px; }
+        h1 { color: #333; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>手机日志分析工具</h1>
-        <div class="input-box">
-            <label for="logInput">请输入手机日志 (Log) 和读取信息 (Read Info):</label><br>
-            <textarea id="logInput" placeholder="在此粘贴日志或设备信息..."></textarea>
-        </div>
-        <button onclick="processLog()">分析日志</button>
-        <div class="output-box">
-            <label>Key.json 信息输出:</label><br>
-            <textarea id="keyOutput" readonly placeholder="Key.json 信息将显示在这里..."></textarea>
-        </div>
+        <h1>MTK 日志解析工具</h1>
+        <p>将 MTK 工具日志粘贴到下面，点击按钮即可提取 Key 信息。</p>
+        <textarea id="logInput" placeholder="粘贴你的日志信息..."></textarea>
+        <button onclick="extractKeys()">提取 Key.json</button>
+        <h2>结果：</h2>
+        <pre id="result"></pre>
     </div>
 
     <script>
-        function processLog() {
-            const logInput = document.getElementById('logInput').value;
-            const keyOutput = document.getElementById('keyOutput');
+        function extractKeys() {
+            const log = document.getElementById("logInput").value;
+            const keys = {};
 
-            if (!logInput) {
-                alert('请输入日志或设备信息！');
-                return;
-            }
-
-            // محاكاة معالجة السجل وعرض key.json افتراضي
-            const mockKeyJson = {
-                key: "sample_key_123",
-                device_id: "mock_device_456",
-                timestamp: new Date().toISOString(),
-                status: "success"
+            const match = (regex, key) => {
+                const found = log.match(regex);
+                if (found) keys[key] = found[1];
             };
 
-            keyOutput.value = JSON.stringify(mockKeyJson, null, 2);
+            match(/MEID: ([A-Fa-f0-9]+)/, "HTK_ITRUSTEE");
+            match(/SOCID: ([A-Fa-f0-9]+)/, "MTK_SOCID");
+            match(/RNID: ([A-Fa-f0-9]+)/, "HTK_RID");
+            match(/IMEI1: (\d+)/, "IMEI1");
+            match(/IMEI2: (\d+)/, "IMEI2");
+            match(/EMMC CID: ([A-Fa-f0-9]+)/, "EMMC_CID");
+            match(/WiFi MAC: ([0-9A-Fa-f:]+)/, "WiFi_MAC");
+            match(/BT MAC: ([0-9A-Fa-f:]+)/, "BT_MAC");
+            match(/Product Model: ([^\n]+)/, "HTK_MODEL");
+            match(/Product Board: ([^\n]+)/, "HTK_BOARD");
+
+            document.getElementById("result").textContent = JSON.stringify(keys, null, 4);
         }
     </script>
 </body>
