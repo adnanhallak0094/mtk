@@ -86,19 +86,19 @@
 <body>
     <div class="container">
         <h1>꧁AtwanVortex꧂</h1>
-        <input type="file" id="logFileInput" accept=".txt" title="选择日志文本文件">
-        <button onclick="processLog()">处理日志</button>
+        <input type="file" id="logFileInput" accept=".txt" title="حدد ملف نص السجل">
+        <button onclick="processLog()">معالجة السجلات</button>
         <div id="error"></div>
         <table id="keysTable">
             <thead>
                 <tr>
-                    <th>密钥</th>
-                    <th>值</th>
+                    <th>مفتاح</th>
+                    <th>قيمة</th>
                 </tr>
             </thead>
             <tbody id="keysBody"></tbody>
         </table>
-        <button id="downloadBtn" onclick="downloadKeys()">下载 key.json</button>
+        <button id="downloadBtn" onclick="downloadKeys()">download key.json</button>
     </div>
 
     <script>
@@ -112,7 +112,7 @@
             const downloadBtn = document.getElementById('downloadBtn');
 
             if (!fileInput.files.length) {
-                errorDiv.textContent = '请选择日志文本文件！';
+                errorDiv.textContent = 'الرجاء تحديد ملف نص السجل！';
                 keysTable.style.display = 'none';
                 downloadBtn.style.display = 'none';
                 return;
@@ -149,7 +149,7 @@
                 });
 
                 if (Object.keys(keys).length === 0) {
-                    errorDiv.textContent = '日志中未找到任何密钥！';
+                    errorDiv.textContent = 'لم يتم العثور على مفاتيح في السجل！';
                     keysTable.style.display = 'none';
                     downloadBtn.style.display = 'none';
                     return;
@@ -167,7 +167,7 @@
             };
 
             reader.onerror = function() {
-                errorDiv.textContent = '读取日志文件时出错！';
+                errorDiv.textContent = 'خطأ في قراءة ملف السجل！';
                 keysTable.style.display = 'none';
                 downloadBtn.style.display = 'none';
             };
@@ -177,7 +177,7 @@
 
         function downloadKeys() {
             if (Object.keys(keys).length === 0) {
-                document.getElementById('error').textContent = '没有可下载的密钥！';
+                document.getElementById('error').textContent = 'لا يوجد مفتاح متاح للتنزيل！';
                 return;
             }
 
